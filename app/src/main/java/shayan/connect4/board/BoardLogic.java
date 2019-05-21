@@ -11,9 +11,6 @@ import shayan.connect4.controller.GamePlayController;
 import shayan.connect4.rules.Player;
 
 
-/**
- * Created by Rahul on 30/05/17.
- */
 
 public class BoardLogic {
     private static final String TAG = GamePlayController.class.getName();
