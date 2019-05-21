@@ -124,7 +124,7 @@ public class BoardView extends RelativeLayout {
         mCells = new ImageView[ROWS][COLS];
         for (int r = 0; r < ROWS; r++) {
             ViewGroup row = (ViewGroup) ((ViewGroup) mBoardView).getChildAt(r);
-            row.setClipChildren(false);
+//            row.setClipChildren(false);
             for (int c = 0; c < COLS; c++) {
                 ImageView imageView = (ImageView) row.getChildAt(c);
                 imageView.setImageResource(android.R.color.transparent);

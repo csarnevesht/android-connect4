@@ -16,14 +16,8 @@ import shayan.connect4.activity.GamePlayActivity;
 import shayan.connect4.board.BoardLogic;
 import shayan.connect4.rules.GameRules;
 import shayan.connect4.rules.Player;
-import shayan.connect4.utils.Constants;
 import shayan.connect4.view.BoardView;
 
-import static java.lang.Thread.sleep;
-
-/**
- * Created by Rahul on 30/05/17.
- */
 
 public class GamePlayController implements View.OnClickListener {
 
@@ -132,7 +126,7 @@ public class GamePlayController implements View.OnClickListener {
 
         // check if someone has won
         checkForWin();
-        //   board.displayBoard();
+//           board.displayBoard();
         if (BuildConfig.DEBUG) {
             mBoardLogic.displayBoard();
             Log.e(TAG, "Turn: " + mPlayerTurn);
