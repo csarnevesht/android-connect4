@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import shayan.connect4.BuildConfig;
 import shayan.connect4.activity.GamePlayActivity;
-import shayan.connect4.ai.AiPlayer;
 import shayan.connect4.board.BoardLogic;
 import shayan.connect4.rules.GameRules;
 import shayan.connect4.rules.Player;
@@ -55,12 +54,6 @@ public class GamePlayController implements View.OnClickListener {
     private final BoardLogic mBoardLogic = new BoardLogic(mGrid, mFree);
 
     /**
-     * Instance of Ai player
-     */
-    @Nullable
-    private AiPlayer mAiPlayer;
-
-    /**
      * current status
      */
     @NonNull
@@ -85,8 +78,6 @@ public class GamePlayController implements View.OnClickListener {
      */
     @NonNull
     private final GameRules mGameRules;
-
-    private boolean mAiTurn;
 
     public GamePlayController(Context context, BoardView boardView, @NonNull GameRules mGameRules) {
         this.mContext = context;
@@ -115,40 +106,7 @@ public class GamePlayController implements View.OnClickListener {
             mFree[j] = ROWS;
         }
 
-        // create AI if needed
-        if (mGameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
-            mAiPlayer = new AiPlayer(mBoardLogic);
-            switch (mGameRules.getRule(GameRules.LEVEL)) {
-                case GameRules.Level.EASY:
-                    mAiPlayer.setDifficulty(4);
-                    break;
-                case GameRules.Level.NORMAL:
-                    mAiPlayer.setDifficulty(7);
-                    break;
-                case GameRules.Level.HARD:
-                    mAiPlayer.setDifficulty(10);
-                    break;
-                default:
-                    mAiPlayer = null;
-                    break;
-            }
-        } else {
-            mAiPlayer = null;
-        }
-
-        // if it is a computer turn, go ahead with it
-        if (mPlayerTurn == GameRules.FirstTurn.PLAYER2 && mAiPlayer != null) aiTurn();
     }
-
-    /**
-     * ai turn goes here
-     */
-    private void aiTurn() {
-
-        if (mFinished) return;
-        new AiTask().execute();
-    }
-
 
     /**
      * drop disc into a column
@@ -175,13 +133,11 @@ public class GamePlayController implements View.OnClickListener {
         // check if someone has won
         checkForWin();
         //   board.displayBoard();
-        mAiTurn = false;
         if (BuildConfig.DEBUG) {
             mBoardLogic.displayBoard();
             Log.e(TAG, "Turn: " + mPlayerTurn);
         }
-        // AI move if needed
-        if (mPlayerTurn == Player.PLAYER2 && mAiPlayer != null) aiTurn();
+
     }
 
     /**
@@ -218,40 +174,11 @@ public class GamePlayController implements View.OnClickListener {
 
     @Override
     public void onClick(@NonNull View view) {
-        if (mFinished || mAiTurn) return;
+        if (mFinished) return;
         int col = mBoardView.colAtX(view.getX());
         if (BuildConfig.DEBUG) {
             Log.e(TAG, "Selected column: " + col);
         }
         selectColumn(col);
-    }
-
-    /**
-     * run ai movement in background thread
-     */
-    class AiTask extends AsyncTask<Void, Void, Integer> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mAiTurn = true;
-        }
-
-        @Override
-        protected Integer doInBackground(Void... voids) {
-            try {
-                Thread.currentThread();
-                sleep(Constants.AI_DELAY);
-            } catch (InterruptedException e) {
-                if (BuildConfig.DEBUG) {
-                    e.printStackTrace();
-                }
-            }
-            return mAiPlayer.getColumn();
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            selectColumn(integer);
-        }
     }
 }

@@ -1,9 +1,5 @@
 package shayan.connect4.rules;
 
-/**
- * Rules base class
- * Created by Rahul on 30/05/17.
- */
 
 abstract class Rule {
 

@@ -32,8 +32,6 @@ public class GamePlayActivity extends AppCompatActivity {
     @NonNull
     private GameRules getDefaultGameRules() {
         mGameRules.setRule(GameRules.FIRST_TURN, GameRules.FirstTurn.PLAYER1);
-        mGameRules.setRule(GameRules.LEVEL, GameRules.Level.HARD);
-        mGameRules.setRule(GameRules.OPPONENT, GameRules.Opponent.PLAYER);
         mGameRules.setRule(GameRules.DISC, GameRules.Disc.RED);
         mGameRules.setRule(GameRules.DISC2, GameRules.Disc.YELLOW);
         return mGameRules;

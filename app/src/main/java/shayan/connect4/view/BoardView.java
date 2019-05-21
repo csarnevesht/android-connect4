@@ -114,8 +114,7 @@ public class BoardView extends RelativeLayout {
      */
     private void setPlayer2() {
         mPlayer2.disc.setImageResource(mGameRules.getRule(GameRules.DISC2));
-        mPlayer2.name.setText(mGameRules.getRule(GameRules.OPPONENT) == R.string.opponent_ai ?
-                mContext.getString(R.string.opponent_ai) : mContext.getString(R.string.opponent_player));
+        mPlayer2.name.setText(mContext.getString(R.string.opponent_player));
     }
 
     /**
@@ -217,8 +216,7 @@ public class BoardView extends RelativeLayout {
                     }
                     break;
                 case PLAYER2_WINS:
-                    mWinnerView.setText(mGameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI ?
-                            mContext.getString(R.string.you_lose) : mContext.getString(R.string.friend_win));
+                    mWinnerView.setText(mContext.getString(R.string.friend_win));
                     for (ImageView winDisc : winDiscs) {
                         winDisc.setImageResource(mGameRules.getRule(GameRules.DISC2) == GameRules.Disc.RED ?
                                 R.drawable.win_red : R.drawable.win_yellow);
